@@ -1,0 +1,17 @@
+#---------------- promethues Service ---------------
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: prometheus
+  name: prometheus  
+  namespace: hyperledger
+spec:
+  type: NodePort
+  ports:
+  - name: prometheus
+    protocol: TCP
+    port: 9090
+    targetPort: 9090
+  selector:
+    app: prometheus

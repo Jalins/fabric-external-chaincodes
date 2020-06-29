@@ -1,0 +1,39 @@
+--- #---------------- CA org1 Deployment ---------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: prometheus
+  name: prometheus
+  namespace: hyperledger
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: prom/prometheus:v2.2.1
+          command:
+          - "/bin/prometheus"
+          args:
+          - "--config.file=/etc/prometheus/prometheus.yaml"
+          ports:
+          - containerPort: 9090
+            protocol: TCP
+          volumeMounts:
+          - mountPath: "/etc/prometheus"
+            name: prometheus-config
+      restartPolicy: Always
+      volumes:
+        - name: prometheus-config
+          hostPath:
+            path: /home/fabric-external-chaincodes/prometheus/config
+            type: Directory

@@ -36,7 +36,7 @@ spec:
             - orderer
           env:
             - name: FABRIC_LOGGING_SPEC
-              value: DEBUG
+              value: INFO
             - name: ORDERER_OPERATIONS_LISTENADDRESS
               value: 0.0.0.0:8443
             - name: ORDERER_METRICS_PROVIDER

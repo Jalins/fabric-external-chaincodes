@@ -1,0 +1,47 @@
+# my global config
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+    monitor: 'codelab-monitor'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+scrape_configs:
+  - job_name:       'fabric'
+
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+
+    static_configs:
+      # - targets: [' peer0.org1:9443']
+      #   labels:
+      #     group: 'peers_org1'
+
+      # - targets: [' peer0.org2:9443']
+      #   labels:
+      #     group: 'peers_org2'
+
+      - targets: ['orderer0:8443']
+        labels:
+          group: 'orderer'
+      - targets: ['orderer1:8443']
+        labels:
+          group: 'orderer'
+      - targets: ['orderer2:8443']
+        labels:
+          group: 'orderer'
